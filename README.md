@@ -2,7 +2,7 @@
 remi all services
 
 # Running instructions
-* To save time images are prebuild and pushed to dockerhub
+* To save time images are pre built and pushed to dockerhub
 
 ```shell
 docker-compose up
