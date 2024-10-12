@@ -2,7 +2,7 @@
 remi all services
 
 # Running instructions
-* To save time images are pre built and pushed to dockerhub
+* To save time images are pre-built and pushed to dockerhub
 
 ```shell
 docker-compose up
@@ -11,4 +11,9 @@ docker-compose up
 * To access the application
 
 http://localhost
+
+# to build images locally
+```shell
+docker-compose -f docker-compose_build.yml down
+```
 
