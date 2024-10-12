@@ -1,0 +1,24 @@
+DetectRacks:
+  blur:
+    kernal: [7, 7]
+    sigmaX: 0
+  edge:
+    canny:
+      tLower: 20
+      tUpper: 150
+      apertureSize: 3
+      l2Gradient: True
+  dilate:
+    Kernel: [7, 7]
+    iterations: 1
+  erode:
+    Kernel: [3, 3]
+    iterations: 3
+  minArea: 2000
+  boundingBox:
+    color: [0, 255, 0]
+    thickness: 3
+Common:
+  resizeKernal: [512, 512]
+
+

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "Whole Wheat Biscuit",
+    "name": "Whole Wheat Biscuit",
+    "quantity": 5,
+    "nameItem": "12121",
+    "category": "snacks"
+  },
+  {
+    "id": "Kodo Millet",
+    "name": "XYZ kodo Millet",
+    "quantity": 2,
+    "nameItem": "12121",
+    "category": "millets"
+  },
+  {
+    "id": "Dried Red Chilli",
+    "name": "Dried Whole Red Chilli",
+    "quantity": 2,
+    "nameItem": "12121",
+    "category": "spices"
+  }
+]

@@ -1,0 +1,84 @@
+services:
+  # mongo database
+  remi-db:
+    container_name: RemiDB
+    image: mongodb/mongodb-community-server:7.0.0-ubi9
+    ports:
+      - "27016:27017"
+    networks:
+      - microservicesnet
+    volumes: 
+      - ./moongo_db/data:/data/db
+    hostname: remi-mongodb-service
+  # Eureka Server
+  remi-eurekasvc:
+    build: EurekaServer
+    container_name: RemiEurekaService
+    image: vinod2357/remi:eureka-v1
+    ports:
+      - "8761:8761"
+    networks:
+      - microservicesnet
+    environment:
+      EUREKA_HOST_NAME: remi-eureka-service
+      EUREKA_HOST_PORT: 8761
+    hostname: remi-eureka-service
+  # wireframe synthesis service
+  remi-wfs:
+    container_name: RemiWFS
+    image: vinod2357/remi:wfs-v1
+    ports:
+      - "8000:8000"
+    networks:
+      - microservicesnet
+    environment:
+      ENVIRONMENT: stage
+      EUREKA_HOST_NAME: remi-eureka-service
+      EUREKA_HOST_PORT: 8761
+    hostname: remi-wfs-service
+    depends_on:
+      - remi-db
+      - remi-eurekasvc
+  #beackend service
+  remi-backend:
+    container_name: RemiBackend
+    image: vinod2357/remi:backend-v1
+    ports:
+      - "8001:8001"
+    networks:
+      - microservicesnet
+    environment:
+      ENVIRONMENT: local
+      UPLOAD_PATH: /usr/app/uploads
+      WIREFRAME_BASE: http://remi-wfs-service:8000
+      MONGO_HOST: remi-mongodb-service
+      MONGO_PORT: 27017
+      MONGO_DB_NAME: test_db_1
+      EUREKA_HOST_NAME: remi-eureka-service
+      EUREKA_HOST_PORT: 8761
+      eureka.instance.hostname: localhost
+      eureka.instance.port: 8001
+      server.port: 8001
+      swagger.url: http://localhost:8001
+    hostname: remi-backend-service
+    depends_on:
+      - remi-db
+      - remi-wfs
+      - remi-eurekasvc
+  #frontend service
+  remi-frontend:
+    container_name: RemiFrontend
+    image: vinod2357/remi:ui-v2
+    ports:
+      - "3000:3000"
+    networks:
+      - microservicesnet
+    environment:
+      API_BASE_URL: http://remi-backend-service:8001
+    hostname: remi-frontend-service
+    depends_on:
+      - remi-backend
+# network
+networks:
+  microservicesnet:
+    driver: bridge
