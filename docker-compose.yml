@@ -68,30 +68,16 @@ services:
   #frontend service
   remi-frontend:
     container_name: RemiFrontend
-    image: vinod2357/remi:ui-v1
+    image: vinod2357/remi:ui-v2
     ports:
       - "3000:3000"
     networks:
       - microservicesnet
     environment:
-      API_BASE_URL: http://remi-nginx-service:8080
+      API_BASE_URL: http://remi-backend-service:8001
     hostname: remi-frontend-service
     depends_on:
       - remi-backend
-  # nginx proxy service
-  nginx:
-    image: nginx:latest
-    container_name: RemiNginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-    hostname: remi-nginx-service
-    depends_on:
-      - remi-frontend
-      - remi-backend
-    networks:
-      - microservicesnet
 # network
 networks:
   microservicesnet:
